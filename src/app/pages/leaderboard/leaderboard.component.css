@@ -1,0 +1,26 @@
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    flex-direction: column;
+}
+
+.header-container {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.leaderboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+}
+
+.leaderboard-item {
+    font-size: 16px;
+}
