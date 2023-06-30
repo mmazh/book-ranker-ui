@@ -24,3 +24,8 @@
 .leaderboard-item {
     font-size: 16px;
 }
+
+.header-container h1:hover {
+    color: black;
+    background-color: greenyellow;
+}
