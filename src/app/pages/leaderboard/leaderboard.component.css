@@ -25,6 +25,10 @@
     font-size: 16px;
 }
 
+.leaderboard-item:hover {
+    text-decoration: underline dotted;
+}
+
 .header-container h1:hover {
     color: black;
     background-color: greenyellow;

@@ -8,15 +8,18 @@
         </h1>
     </div>
     <div class="leaderboard-container">
-        <h1 class="leaderboard-item">
-            1.
-        </h1>
-        <h1 class="leaderboard-item">
-            2.
-        </h1>
-        <h1 class="leaderboard-item">
-            3.
-        </h1>
+        <div *ngIf="booksLoaded && votesLoaded; else loading">
+            <div *ngFor="let book of calculateTopThreeBooks(); let i = index"> 
+                <h1 class="leaderboard-item">
+                    {{ i + 1 }}.  {{ book.titleAuthor }}  (SCORE: {{ book.score }})
+                </h1>
+            </div>
+        </div>
+        <ng-template #loading>
+            <h1 class="leaderboard-item">
+                Loading...
+            </h1>
+        </ng-template>
     </div>
     
 </div>
