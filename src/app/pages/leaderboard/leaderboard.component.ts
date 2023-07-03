@@ -48,22 +48,19 @@ export class LeaderboardComponent implements OnInit {
     for (var book of this.books) {
       if (this.rankings[book._id].sumVotes) {
         let score = this.rankings[book._id].sumVotes / this.rankings[book._id].numVotes;
+        score = Math.round(score * 100) / 100; // round to 2 decimal places
         this.sortableRankings.push({titleAuthor: this.rankings[book._id].titleAuthor, score: score});
       }
     }
     this.sortableRankings.sort((a, b) => b.score - a.score);
   }
 
-  private populateRankingData() {
+  public calculateTopThreeBooks() {
     this.rankings = {};
     this.sortableRankings = [];
     this.addBooksToRanking();
     this.addVotesToRanking();
     this.populateSortableRankings();
-  }
-
-  public calculateTopThreeBooks() {
-    this.populateRankingData();
     if (this.sortableRankings.length < 3) { 
       return this.sortableRankings; 
     }
