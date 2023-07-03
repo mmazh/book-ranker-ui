@@ -8,14 +8,10 @@ import { BookService } from 'src/app/book.service';
 })
 export class LeaderboardComponent implements OnInit {
 
-  public NumberOneBook:string = "loaded";
-  public NumberTwoBook: string = "";
-  public NumberThreeBook: string = "";
-
   public booksLoaded: boolean = false;
   public votesLoaded: boolean = false;
 
-  private rankings: { [bookId: string]: { titleAuthor: string, sumVotes: number, numVotes: number, score: number } } = {};
+  private rankings: { [bookId: string]: { titleAuthor: string, sumVotes: number, numVotes: number} } = {};
   private sortableRankings: { titleAuthor: string, score: number}[] = [];
   private books: any;
   private votes: any;
@@ -37,7 +33,7 @@ export class LeaderboardComponent implements OnInit {
   private addBooksToRanking() {
     for (var book of this.books) {
       let bookTitleAuthor = `${book.title}, ${book.author}`;
-      this.rankings[book._id] = { titleAuthor: bookTitleAuthor, sumVotes: 0, numVotes: 0, score: 0};
+      this.rankings[book._id] = { titleAuthor: bookTitleAuthor, sumVotes: 0, numVotes: 0};
     }
   }
 
