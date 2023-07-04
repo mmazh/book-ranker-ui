@@ -12,7 +12,7 @@ export class LeaderboardComponent implements OnInit {
   public votesLoaded: boolean = false;
 
   private rankings: { [bookId: string]: { titleAuthor: string, sumVotes: number, numVotes: number} } = {};
-  private sortableRankings: { titleAuthor: string, score: number}[] = [];
+  private sortedRankings: { titleAuthor: string, score: number}[] = [];
   private books: any;
   private votes: any;
 
@@ -44,28 +44,28 @@ export class LeaderboardComponent implements OnInit {
     }
   }
 
-  private populateSortableRankings() {
+  private populateSortedRankings() {
     for (var book of this.books) {
       if (this.rankings[book._id].sumVotes) {
         let score = this.rankings[book._id].sumVotes / this.rankings[book._id].numVotes;
         score = Math.round(score * 100) / 100; // round to 2 decimal places
-        this.sortableRankings.push({titleAuthor: this.rankings[book._id].titleAuthor, score: score});
+        this.sortedRankings.push({titleAuthor: this.rankings[book._id].titleAuthor, score: score});
       }
     }
-    this.sortableRankings.sort((a, b) => b.score - a.score);
+    this.sortedRankings.sort((a, b) => b.score - a.score);
   }
 
   public calculateTopThreeBooks() {
     this.rankings = {};
-    this.sortableRankings = [];
+    this.sortedRankings = [];
     this.addBooksToRanking();
     this.addVotesToRanking();
-    this.populateSortableRankings();
-    if (this.sortableRankings.length < 3) { 
-      return this.sortableRankings; 
+    this.populateSortedRankings();
+    if (this.sortedRankings.length < 3) { 
+      return this.sortedRankings; 
     }
     else { 
-      return this.sortableRankings.slice(0, 3); 
+      return this.sortedRankings.slice(0, 3); 
     }
   }
 

@@ -9,7 +9,7 @@
 .header-container {
     display: flex;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     justify-content: space-evenly;
     align-items: center;
 }
@@ -23,6 +23,7 @@
 
 .leaderboard-item {
     font-size: 16px;
+    color: grey;
 }
 
 .leaderboard-item:hover {
