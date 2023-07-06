@@ -14,7 +14,7 @@
         <div *ngIf="booksLoaded && votesLoaded; else loading">
             <div *ngFor="let book of calculateTopXBooks(3); let i = index"> 
                 <p class="leaderboard-item">
-                    {{ i + 1 }}.  {{ book.titleAuthor }}  ({{ book.score }}/5)
+                    {{ i + 1 }}.  {{ book.titleAuthor }}  <span style="color: gold;"> (★{{ book.score }}) </span>
                 </p>
             </div>
         </div>

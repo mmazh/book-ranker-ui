@@ -17,7 +17,7 @@
                     <summary> {{ getTitleAuthorString(bookId) }}</summary>
                     <div *ngIf="votesDict[bookId].length > 0; else NoVotes">
                         <span *ngFor="let singleVote of votesDict[bookId]">
-                            <p class="vote-item"> {{ singleVote.username }}: {{ singleVote.score }} </p>
+                            <p class="vote-item"> {{ singleVote.username }}: {{ singleVote.score}}★ </p>
                         </span>
                     </div>
                     <ng-template #NoVotes>
