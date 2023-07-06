@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VoteComponent } from './pages/vote/vote.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeaderboardComponent,
-    BrowseComponent
+    BrowseComponent,
+    VoteComponent
   ],
   imports: [
     BrowserModule,
