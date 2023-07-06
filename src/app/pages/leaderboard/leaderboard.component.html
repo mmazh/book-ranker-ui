@@ -3,7 +3,7 @@
         <h1 class="title">
             Leaderboard
         </h1>
-        <h1 class="title">
+        <h1 class="title" routerLink="browse">
             Browse
         </h1>
         <h1 class="title">
@@ -13,9 +13,9 @@
     <div class="leaderboard-container">
         <div *ngIf="booksLoaded && votesLoaded; else loading">
             <div *ngFor="let book of calculateTopXBooks(3); let i = index"> 
-                <h1 class="leaderboard-item">
-                    {{ i + 1 }}.  {{ book.titleAuthor }}  (SCORE: {{ book.score }})
-                </h1>
+                <p class="leaderboard-item">
+                    {{ i + 1 }}.  {{ book.titleAuthor }}  ({{ book.score }}/5)
+                </p>
             </div>
         </div>
         <ng-template #loading>

@@ -9,3 +9,24 @@
 h1 {
     color: greenyellow;
 }
+
+.centered-content {
+    position: fixed;
+    left: 550px;
+    top: 100px;
+}
+
+.header-container {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 500px;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-evenly;
+}
+
+.header-container h1:hover {
+    color: black;
+    background-color: greenyellow;
+}

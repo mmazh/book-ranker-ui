@@ -1,1 +1,38 @@
-<p>browse works!</p>
+<div class="centered-content">
+    <div class="header-container">
+        <h1 class="title" routerLink="">
+            Leaderboard
+        </h1>
+        <h1 class="title">
+            Browse
+        </h1>
+        <h1 class="title">
+            Vote
+        </h1>
+    </div>
+    <div class="content-container">
+        <div *ngIf="booksLoaded && votesLoaded; else loading">
+            <div *ngFor="let bookId of getArrayOfBookIds()">
+                <details class="book-item" >
+                    <summary> {{ getTitleAuthorString(bookId) }}</summary>
+                    <div *ngIf="votesDict[bookId].length > 0; else NoVotes">
+                        <span *ngFor="let singleVote of votesDict[bookId]">
+                            <p class="vote-item"> {{ singleVote.username }}: {{ singleVote.score }} </p>
+                        </span>
+                    </div>
+                    <ng-template #NoVotes>
+                        <p class="vote-item">
+                            No votes for this book yet :(
+                        </p>
+                    </ng-template>
+                </details>
+            </div>
+            
+        </div>
+        <ng-template #loading>
+            <p class="book-item">
+                Loading...
+            </p>
+        </ng-template>
+    </div>
+</div>

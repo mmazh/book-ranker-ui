@@ -1,0 +1,16 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 480px;
+}
+
+.book-item {
+    color: white;
+}
+
+.vote-item {
+    color: slateblue;
+    text-indent: 30px;
+    margin: 0;
+}
