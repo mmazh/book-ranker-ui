@@ -16,4 +16,12 @@ export class BookService {
     return this.webReqService.get(`votes`);
   }
 
+  createNewVote(bookId: number, payload: Object) {
+    return this.webReqService.post(`books/${bookId}/votes`, payload);
+  }
+
+  updateVote(bookId: number, voteId: number, payload: Object) {
+    return this.webReqService.patch(`books/${bookId}/votes/${voteId}`, payload);
+  }
+
 }

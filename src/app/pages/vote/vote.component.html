@@ -10,4 +10,29 @@
             Vote
         </h1>
     </div>
+    <form  [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label class="white"> Username: </label>
+            <input type="text" class="white" formControlName="username">
+        </p>
+        <p>
+            <label class="white"> Book: </label>
+            <select class="white" formControlName="book">
+                <option> Test 1 </option>
+                <option> Test 2 </option>
+                <option> Test 3 </option>
+            </select>
+        </p>
+
+        <p>
+            <label class="white"> Rating: </label>
+            <span class="white star one-star">
+                ★ ★ ★ ★ ★
+            </span>
+        </p>
+
+        <p>
+            <button class="white" type="submit">Vote</button>
+        </p>
+    </form>
 </div>

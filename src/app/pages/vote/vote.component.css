@@ -1,0 +1,14 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 480px;
+}
+
+.star {
+    font-size: large;
+}
+
+.star:hover{
+    color: gold;
+}
