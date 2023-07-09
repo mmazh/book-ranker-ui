@@ -15,19 +15,22 @@
             <label class="white"> Username: </label>
             <input type="text" class="white" formControlName="username">
         </p>
-        <p>
-            <label class="white"> Book: </label>
+        <div *ngIf="booksLoaded; else loading">
             <select class="white" formControlName="book">
-                <option> Test 1 </option>
-                <option> Test 2 </option>
-                <option> Test 3 </option>
+                <option> Choose a Book...</option>
+                <option *ngFor="let book of this.books"> {{ book.title }}, {{ book.author }} </option>
             </select>
-        </p>
-
+        </div>
+        <ng-template #loading> Loading... </ng-template>
         <p>
             <label class="white"> Rating: </label>
-            <span class="white star one-star">
-                ★ ★ ★ ★ ★
+            <span class="star-cb-group">
+                <input type="radio" id="rating-5" name="stars" value="5" formControlName="stars">/> <label for="rating-5">5</label>
+                <input type="radio" id="rating-4" name="stars" value="4" formControlName="stars" checked="checked"/> <label for="rating-4">4</label>
+                <input type="radio" id="rating-3" name="stars" value="3" formControlName="stars"/> <label for="rating-3">3</label>
+                <input type="radio" id="rating-2" name="stars" value="2" formControlName="stars"/> <label for="rating-2">2</label>
+                <input type="radio" id="rating-1" name="stars" value="1" formControlName="stars"/> <label for="rating-1">1</label>
+                <input type="radio" id="rating-0" name="stars" value="0" formControlName="stars" class="star-cb-clear" /> <label for="rating-0">0</label>
             </span>
         </p>
 
