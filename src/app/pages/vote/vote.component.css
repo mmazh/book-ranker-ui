@@ -53,3 +53,8 @@ option {
     color: limegreen;
     text-shadow: 0 0 8px rgb(118, 225, 118);
 }
+
+.update-btn {
+    display: inline;
+    margin-right: 20px;
+}

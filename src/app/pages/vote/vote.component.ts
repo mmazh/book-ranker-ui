@@ -11,16 +11,21 @@ export class VoteComponent implements OnInit {
 
   public booksLoaded: boolean = false;
   public votesLoaded: boolean = false;
-  public isSubmitted: boolean = false;
-  // user name cant have spaces or special chars except -, numbers ok, uppercase and lower are the same
-  
+  public alreadyVoted: boolean = false;
   public books: { title: string, author: string, _id: number }[] = [];
   private votes: any;
 
   public voteForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    book: new FormControl(''),
-    stars: new FormControl('')
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.pattern('^[-a-zA-Z0-9]+$')]),
+    book: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1)]),
+    stars: new FormControl(0, [
+      Validators.required,
+      Validators.minLength(1)])
   });
 
   constructor(private bookService: BookService) {}
@@ -35,23 +40,61 @@ export class VoteComponent implements OnInit {
     this.bookService.getAllVotes().subscribe((response: any) => {
       this.votes = response;
       this.votesLoaded = true;
+      this.createVotesHashMap(); // TODO move data formatting to service logic
     });
   }
 
-  public getBooks() {
-    let titleAuthor: string[] = [];
-    for (var book of this.books) {
-      titleAuthor.push(`${book.title}, ${book.author}`);
-    }
-    return titleAuthor;
-  }
-
   public onSubmit(): void {
-    this.isSubmitted = true;
-    console.log(this.voteForm.value);
+    if (this.voteForm.invalid) return;
+    let bookId = this.getBookId(this.voteForm.value.book);
+    if (this.isDuplicateVoter()) {
+      this.alreadyVoted = true;
+    }
+    let payload = {
+      vote: this.voteForm.value.stars,
+      user: this.voteForm.value.username
+    };
+    this.bookService.createNewVote(bookId, payload).subscribe((response: any) => {
+      console.log(response);
+    });
   }
 
-  private getBookId(titleAuthor: string) {
+  public updateVote() {
+    console.log("inside update");
+  }
+
+  public cancelUpdate() {
+    this.alreadyVoted = false;
+    window.location.reload();
+  }
+
+  private isDuplicateVoter() {
+    let bookId = this.getBookId(this.voteForm.value.book);
+    if (this.votes[bookId] == undefined) {
+      return false;
+    }
+    for (let vote of this.votes[bookId]) {
+      if (vote.username == this.voteForm.value.username) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // makes checking for duplicate votes in checkDuplicateVote() cheaper
+  // TODO move this logic to book.service.ts
+  private createVotesHashMap() {
+    let votesDict: {[bookId: number]: { username: string, stars: number}[] } = {};
+    for (let vote of this.votes) {
+      if (votesDict[vote._bookId] == undefined) {
+        votesDict[vote._bookId] = [];
+      }
+      votesDict[vote._bookId].push({username: vote.user, stars: vote.vote});
+    }
+    this.votes = votesDict;
+  }
+
+  private getBookId(titleAuthor: string | undefined | null) {
     for (var book of this.books) {
       if (`${book.title}, ${book.author}` == titleAuthor) {
         return book._id;

@@ -15,12 +15,12 @@
             <label class="white"> Username: </label>
             <input type="text" class="white" formControlName="username">
         </p>
-        <div *ngIf="booksLoaded; else loading">
+        <p *ngIf="booksLoaded; else loading">
             <select class="white" formControlName="book">
-                <option> Choose a Book...</option>
+                <option value=""> Choose a Book...</option>
                 <option *ngFor="let book of this.books"> {{ book.title }}, {{ book.author }} </option>
             </select>
-        </div>
+        </p>
         <ng-template #loading> Loading... </ng-template>
         <p>
             <label class="white"> Rating: </label>
@@ -32,9 +32,16 @@
                 <input type="radio" id="rating-1" name="stars" value="1" formControlName="stars"/> <label for="rating-1">1</label>
             </span>
         </p>
-
-        <p>
+        <p *ngIf="!this.alreadyVoted">
             <button class="white" type="submit">Vote</button>
         </p>
+        <p class="red" *ngIf="this.alreadyVoted">
+            Looks like you already voted for this book. Update your existing vote?
+        </p>
+        <div *ngIf="this.alreadyVoted">
+            <button type="reset" class="white update-btn" (click)="cancelUpdate()">Cancel</button>
+            <button class="white update-btn" (click)="updateVote()">Update</button>
+        </div>
+        
     </form>
 </div>
