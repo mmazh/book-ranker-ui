@@ -25,8 +25,15 @@ export class VoteComponent implements OnInit {
       Validators.minLength(1)]),
     stars: new FormControl(0, [
       Validators.required,
-      Validators.minLength(1)])
+      Validators.min(1)])
   });
+
+  get username() { return this.voteForm.get('username'); }
+
+  get book() { return this.voteForm.get('book'); }
+
+  get stars() { return this.voteForm.get('stars'); }
+
 
   constructor(private bookService: BookService) {}
 
@@ -49,14 +56,15 @@ export class VoteComponent implements OnInit {
     let bookId = this.getBookId(this.voteForm.value.book);
     if (this.isDuplicateVoter()) {
       this.alreadyVoted = true;
+      return;
     }
     let payload = {
       vote: this.voteForm.value.stars,
       user: this.voteForm.value.username
     };
-    this.bookService.createNewVote(bookId, payload).subscribe((response: any) => {
-      console.log(response);
-    });
+    // this.bookService.createNewVote(bookId, payload).subscribe((response: any) => {
+    //   console.log(response);
+    // });
   }
 
   public updateVote() {

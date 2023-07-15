@@ -54,7 +54,12 @@ option {
     text-shadow: 0 0 8px rgb(118, 225, 118);
 }
 
-.update-btn {
+.inline {
     display: inline;
     margin-right: 20px;
+}
+
+input.ng-invalid.ng-dirty
+{
+    border: 1px solid red !important; 
 }

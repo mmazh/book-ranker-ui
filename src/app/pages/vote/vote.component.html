@@ -10,37 +10,39 @@
             Vote
         </h1>
     </div>
-    <form  [formGroup]="voteForm" (ngSubmit)="onSubmit()">
-        <p>
-            <label class="white"> Username: </label>
-            <input type="text" class="white" formControlName="username">
-        </p>
-        <p *ngIf="booksLoaded; else loading">
-            <select class="white" formControlName="book">
+    <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+        <label class="white"> Username: </label>
+        <input [ngClass]="{ 'red': username?.invalid, 'white': username?.valid }" type="text" required formControlName="username">
+        <p class="red inline" *ngIf="username?.invalid && username?.dirty"> Only letters, numbers, or dashes "-"" allowed </p>
+        <br><br>
+        <div *ngIf="booksLoaded; else loading"> 
+            <select class="white" required formControlName="book">
                 <option value=""> Choose a Book...</option>
                 <option *ngFor="let book of this.books"> {{ book.title }}, {{ book.author }} </option>
             </select>
-        </p>
+        </div>
         <ng-template #loading> Loading... </ng-template>
-        <p>
-            <label class="white"> Rating: </label>
-            <span class="rating">
-                <input type="radio" id="rating-5" name="stars" value="5" formControlName="stars">/> <label for="rating-5">5</label>
-                <input type="radio" id="rating-4" name="stars" value="4" formControlName="stars" checked="checked"/> <label for="rating-4">4</label>
-                <input type="radio" id="rating-3" name="stars" value="3" formControlName="stars"/> <label for="rating-3">3</label>
-                <input type="radio" id="rating-2" name="stars" value="2" formControlName="stars"/> <label for="rating-2">2</label>
-                <input type="radio" id="rating-1" name="stars" value="1" formControlName="stars"/> <label for="rating-1">1</label>
-            </span>
+        <br>
+        <label class="white"> Rating: </label>
+        <span class="rating">
+            <input type="radio" id="rating-5" name="stars" value="5" formControlName="stars">/> <label for="rating-5">5</label>
+            <input type="radio" id="rating-4" name="stars" value="4" formControlName="stars" checked="checked"/> <label for="rating-4">4</label>
+            <input type="radio" id="rating-3" name="stars" value="3" formControlName="stars"/> <label for="rating-3">3</label>
+            <input type="radio" id="rating-2" name="stars" value="2" formControlName="stars"/> <label for="rating-2">2</label>
+            <input type="radio" id="rating-1" name="stars" value="1" formControlName="stars"/> <label for="rating-1">1</label>
+        </span>
+        <p *ngIf="voteForm.invalid" class="white">
+            Vote button will appear once you complete the form
         </p>
-        <p *ngIf="!this.alreadyVoted">
+        <p *ngIf="!this.alreadyVoted && voteForm.valid">
             <button class="white" type="submit">Vote</button>
         </p>
         <p class="red" *ngIf="this.alreadyVoted">
             Looks like you already voted for this book. Update your existing vote?
         </p>
         <div *ngIf="this.alreadyVoted">
-            <button type="reset" class="white update-btn" (click)="cancelUpdate()">Cancel</button>
-            <button class="white update-btn" (click)="updateVote()">Update</button>
+            <button type="reset" class="white inline" (click)="cancelUpdate()">Cancel</button>
+            <button class="white inline" (click)="updateVote()">Update</button>
         </div>
         
     </form>
