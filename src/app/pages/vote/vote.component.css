@@ -9,7 +9,6 @@ option {
     font-size: smaller;
 }
 
-
 .rating {
     /* flip the order so we can use ~ and + */
     unicode-bidi: bidi-override;
@@ -59,7 +58,15 @@ option {
     margin-right: 20px;
 }
 
-input.ng-invalid.ng-dirty
-{
+input.ng-invalid.ng-dirty {
     border: 1px solid red !important; 
+}
+
+button:disabled {
+    background: grey;
+}
+
+button {
+    background: greenyellow;
+    color: black;
 }

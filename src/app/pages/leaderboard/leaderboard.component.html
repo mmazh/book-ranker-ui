@@ -11,10 +11,10 @@
         </h1>
     </div>
     <div class="leaderboard-container">
-        <div *ngIf="booksLoaded && votesLoaded; else loading">
-            <div *ngFor="let book of calculateTopXBooks(3); let i = index"> 
+        <div *ngIf="loaded; else loading">
+            <div *ngFor="let book of topBooks; let i = index"> 
                 <p class="leaderboard-item">
-                    {{ i + 1 }}.  {{ book.titleAuthor }}  <span style="color: gold;"> (★{{ book.score }}) </span>
+                    {{ i + 1 }}.  {{ book.title }} {{ book.author }} <span style="color: gold;"> (★{{ book.average }}) </span>
                 </p>
             </div>
         </div>

@@ -8,68 +8,16 @@ import { BookService } from 'src/app/book.service';
 })
 export class LeaderboardComponent implements OnInit {
 
-  public booksLoaded: boolean = false;
-  public votesLoaded: boolean = false;
-
-  private rankings: { [bookId: string]: { titleAuthor: string, sumVotes: number, numVotes: number} } = {};
-  private sortedRankings: { titleAuthor: string, score: number}[] = [];
-  private books: any;
-  private votes: any;
+  public loaded: boolean = false;
+  public topBooks: {title: string, author: string, average: number}[] = [];
 
   constructor(private bookService: BookService) { }
 
   ngOnInit() {
-    this.bookService.getAllBooks().subscribe((response: any) => {
-      this.books = response;
-      this.booksLoaded = true;
+    this.bookService.getTopThreeBooks().subscribe((response: any) => {
+      this.topBooks = response;
+      this.loaded = true;
     });
-
-    this.bookService.getAllVotes().subscribe((response: any) => {
-      this.votes = response;
-      this.votesLoaded = true;
-    });
-  }
-
-  private addBooksToRanking() {
-    for (var book of this.books) {
-      let bookTitleAuthor = `${book.title}, ${book.author}`;
-      this.rankings[book._id] = { titleAuthor: bookTitleAuthor, sumVotes: 0, numVotes: 0};
-    }
-  }
-
-  private addVotesToRanking() {
-    for (var vote of this.votes) {
-      this.rankings[vote._bookId].sumVotes += vote.vote;
-      this.rankings[vote._bookId].numVotes += 1;
-    }
-  }
-
-  private populateSortedRankings() {
-    for (var book of this.books) {
-      if (this.rankings[book._id].sumVotes) {
-        let score = this.rankings[book._id].sumVotes / this.rankings[book._id].numVotes;
-        score = Math.round(score * 100) / 100; // round to 2 decimal places
-        this.sortedRankings.push({titleAuthor: this.rankings[book._id].titleAuthor, score: score});
-      }
-      else {
-        this.sortedRankings.push({titleAuthor: this.rankings[book._id].titleAuthor, score: 0});
-      }
-    }
-    this.sortedRankings.sort((a, b) => b.score - a.score);
-  }
-
-  public calculateTopXBooks(x: number) {
-    this.rankings = {};
-    this.sortedRankings = [];
-    this.addBooksToRanking();
-    this.addVotesToRanking();
-    this.populateSortedRankings();
-    if (this.sortedRankings.length < x) { 
-      return this.sortedRankings; 
-    }
-    else {
-      return this.sortedRankings.slice(0, x);
-    }
   }
   
 }

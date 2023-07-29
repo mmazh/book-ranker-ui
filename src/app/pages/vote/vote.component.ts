@@ -9,11 +9,9 @@ import { BookService } from 'src/app/book.service';
 })
 export class VoteComponent implements OnInit {
 
-  public booksLoaded: boolean = false;
-  public votesLoaded: boolean = false;
-  public alreadyVoted: boolean = false;
-  public books: { title: string, author: string, _id: number }[] = [];
+  public books: any;
   private votes: any;
+  private users: any;
 
   public voteForm = new FormGroup({
     username: new FormControl('', [
@@ -28,99 +26,72 @@ export class VoteComponent implements OnInit {
       Validators.min(1)])
   });
 
-  get username() { return this.voteForm.get('username'); }
-
-  get book() { return this.voteForm.get('book'); }
-
-  get stars() { return this.voteForm.get('stars'); }
-
-
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
     this.bookService.getAllBooks().subscribe((response: any) => {
       this.books = response;
-      this.sortBooksAlphabetically();
-      this.booksLoaded = true;
     });
-
     this.bookService.getAllVotes().subscribe((response: any) => {
       this.votes = response;
-      this.votesLoaded = true;
-      this.createVotesHashMap(); // TODO move data formatting to service logic
+    });
+    this.bookService.getAllUsers().subscribe((response: any) => {
+      this.users = response;
     });
   }
 
   public onSubmit(): void {
     if (this.voteForm.invalid) return;
-    let bookId = this.getBookId(this.voteForm.value.book);
-    if (this.isDuplicateVoter()) {
-      this.alreadyVoted = true;
-      return;
+    let payload = this.createPayload();
+    let voteId = this.findExistingVoteId(payload);
+    if (typeof voteId !== "undefined") this.updateVote(payload, voteId);
+    else
+    {
+      this.bookService.createNewVote(payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
     }
-    let payload = {
-      vote: this.voteForm.value.stars,
-      user: this.voteForm.value.username
+  }
+
+  private updateVote(payload: Object, voteId: number) {
+    if (window.confirm("You already voted on this book. Update existing vote?")) {
+      console.log("confirm");
+      this.bookService.updateVote(voteId, payload).subscribe((response: any) => {
+        console.log(response);
+        window.location.reload();
+      });
+    } else {
+      window.location.reload();
+    }
+  }
+
+  private createPayload() {
+    let bookId = this.findBookId(this.voteForm.value.book);
+    let userId = this.findUserId(this.voteForm.value.username);
+    return {
+      bookId: bookId,
+      userId: userId,
+      stars: this.voteForm.value.stars
     };
-    // this.bookService.createNewVote(bookId, payload).subscribe((response: any) => {
-    //   console.log(response);
-    // });
   }
 
-  public updateVote() {
-    console.log("inside update");
+  private findExistingVoteId(payload: {bookId: string, userId: string}) {
+    return this.votes.find((x: any) => x.userId == payload.userId && x.bookId == payload.bookId);
   }
 
-  public cancelUpdate() {
-    this.alreadyVoted = false;
-    window.location.reload();
+  private findUserId(username: string | null | undefined) {
+    return this.users.find((x: any) => x.username == username)?.userId;
   }
 
-  private isDuplicateVoter() {
-    let bookId = this.getBookId(this.voteForm.value.book);
-    if (this.votes[bookId] == undefined) {
-      return false;
-    }
-    for (let vote of this.votes[bookId]) {
-      if (vote.username == this.voteForm.value.username) {
-        return true;
-      }
-    }
-    return false;
+  private findBookId(titleAuthor: string | null | undefined) {
+    return this.books.find((x: any) => `${x.title}, ${x.author}` == titleAuthor)?.bookId;
   }
 
-  // makes checking for duplicate votes in checkDuplicateVote() cheaper
-  // TODO move this logic to book.service.ts
-  private createVotesHashMap() {
-    let votesDict: {[bookId: number]: { username: string, stars: number}[] } = {};
-    for (let vote of this.votes) {
-      if (votesDict[vote._bookId] == undefined) {
-        votesDict[vote._bookId] = [];
-      }
-      votesDict[vote._bookId].push({username: vote.user, stars: vote.vote});
-    }
-    this.votes = votesDict;
-  }
+  get username() { return this.voteForm.get('username'); }
 
-  private getBookId(titleAuthor: string | undefined | null) {
-    for (var book of this.books) {
-      if (`${book.title}, ${book.author}` == titleAuthor) {
-        return book._id;
-      }
-    }
-    return -1;
-  }
+  get book() { return this.voteForm.get('book'); }
 
-  private sortBooksAlphabetically() {
-    this.books.sort(function (a, b) {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    });
-  }
+  get stars() { return this.voteForm.get('stars'); }
 
 }
