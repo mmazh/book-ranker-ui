@@ -43,6 +43,10 @@ export class VoteComponent implements OnInit {
   public onSubmit(): void {
     if (this.voteForm.invalid) return;
     let payload = this.createPayload();
+    if (typeof payload.userId === "undefined") {
+      window.alert("User does not exist. (change this laster)");
+      return;
+    }
     let voteId = this.findExistingVoteId(payload);
     if (typeof voteId !== "undefined") this.updateVote(payload, voteId);
     else
@@ -56,14 +60,11 @@ export class VoteComponent implements OnInit {
 
   private updateVote(payload: Object, voteId: number) {
     if (window.confirm("You already voted on this book. Update existing vote?")) {
-      console.log("confirm");
       this.bookService.updateVote(voteId, payload).subscribe((response: any) => {
         console.log(response);
-        window.location.reload();
       });
-    } else {
-      window.location.reload();
     }
+    window.location.reload();
   }
 
   private createPayload() {
@@ -77,15 +78,15 @@ export class VoteComponent implements OnInit {
   }
 
   private findExistingVoteId(payload: {bookId: string, userId: string}) {
-    return this.votes.find((x: any) => x.userId == payload.userId && x.bookId == payload.bookId);
+    return this.votes.find((x: any) => x.userId === payload.userId && x.bookId === payload.bookId)?.voteId;
   }
 
   private findUserId(username: string | null | undefined) {
-    return this.users.find((x: any) => x.username == username)?.userId;
+    return this.users.find((x: any) => x.username === username)?.userId;
   }
 
   private findBookId(titleAuthor: string | null | undefined) {
-    return this.books.find((x: any) => `${x.title}, ${x.author}` == titleAuthor)?.bookId;
+    return this.books.find((x: any) => `${x.title}, ${x.author}` === titleAuthor)?.bookId;
   }
 
   get username() { return this.voteForm.get('username'); }
