@@ -10,3 +10,7 @@
     text-indent: 30px;
     margin: 0;
 }
+
+summary:hover {
+    cursor: pointer;
+}

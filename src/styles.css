@@ -29,6 +29,7 @@ h1 {
 .header-container h1:hover {
     color: black;
     background-color: greenyellow;
+    cursor: pointer;
 }
 
 .white {

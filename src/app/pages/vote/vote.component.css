@@ -70,3 +70,13 @@ button {
     background: greenyellow;
     color: black;
 }
+
+a:hover {
+    color: greenyellow;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.left-margin {
+    margin-left: 5px;
+}
