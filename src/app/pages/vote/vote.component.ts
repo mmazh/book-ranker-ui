@@ -44,7 +44,8 @@ export class VoteComponent implements OnInit {
     if (this.voteForm.invalid) return;
     let payload = this.createPayload();
     if (typeof payload.userId === "undefined") {
-      window.alert("User does not exist. (change this laster)");
+      window.alert("User does not exist");
+      window.location.reload();
       return;
     }
     let voteId = this.findExistingVoteId(payload);
