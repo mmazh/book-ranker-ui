@@ -7,9 +7,9 @@
     <div class="leaderboard-container">
         <div *ngIf="loaded; else loading">
             <div *ngFor="let book of topBooks; let i = index"> 
-                <p class="leaderboard-item">
-                    {{ i + 1 }}.  {{ book.title }} {{ book.author }} <span style="color: gold;"> (★{{ book.average }}) </span>
-                </p>
+                <div class="white">
+                    {{ i + 1 }}. <span style="color: gold;"> (★{{ book.average }}) </span> {{ book.title }} {{ book.author }}
+                </div>
             </div>
         </div>
         <ng-template #loading>

@@ -1,0 +1,28 @@
+.inline {
+    display: inline;
+    margin-right: 20px;
+}
+
+input.ng-invalid.ng-dirty {
+    border: 1px solid red !important; 
+}
+
+button:disabled {
+    background: grey;
+}
+
+button {
+    background: greenyellow;
+    font-weight: bold;
+    color: black;
+}
+
+.book-exists {
+    border: 1px solid yellow; 
+}
+
+.cancel-btn {
+    background-color: orange;
+    font-weight: bold;
+    margin-left: 5px;
+}

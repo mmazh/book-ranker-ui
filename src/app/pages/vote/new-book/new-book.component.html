@@ -1,0 +1,21 @@
+<div class="centered-content">
+    <div class="header-container">
+        <h1 class="title"> New Book </h1>
+    </div>
+    <form [formGroup]="newBookForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label class="white">Title:  </label>
+            <input type="text" class="white" required formControlName="title">
+            <p class="red inline" *ngIf="title?.invalid && title?.dirty"> only alphanumeric characters </p>
+        </div>
+        <br>
+        <div>
+            <label class="white">Author: </label>
+            <input type="text" class="white" required formControlName="author">
+            <p class="red inline" *ngIf="author?.invalid && author?.dirty"> only alphanumeric characters </p>
+        </div>
+        <br>
+        <button [disabled]="!newBookForm.valid" class="white" type="submit">Add</button>
+        <button class="cancel-btn" routerLink="/vote">Cancel</button>
+    </form>
+</div>

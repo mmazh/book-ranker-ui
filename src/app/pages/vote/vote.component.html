@@ -14,10 +14,11 @@
         <div>
             <select class="white" required formControlName="book">
                 <option value=""> Choose a Book...</option>
-                <option *ngFor="let book of this.books"> {{ book.title }}, {{ book.author }} </option>
+                <option *ngFor="let book of this.books">{{ book.title }}, {{ book.author }}</option>
             </select>
-            <a class="white left-margin">Click to add new book</a>
+            <a class="white left-margin" routerLink="/new-book">Click to add new book</a>
         </div>
+        <br>
         <div>
             <label class="white"> Rating: </label>
             <span class="rating">

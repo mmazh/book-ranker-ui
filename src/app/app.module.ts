@@ -8,13 +8,15 @@ import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component'
 import { BrowseComponent } from './pages/browse/browse.component';
 import { HttpClientModule } from '@angular/common/http';
 import { VoteComponent } from './pages/vote/vote.component';
+import { NewBookComponent } from './pages/vote/new-book/new-book.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeaderboardComponent,
     BrowseComponent,
-    VoteComponent
+    VoteComponent,
+    NewBookComponent
   ],
   imports: [
     BrowserModule,
