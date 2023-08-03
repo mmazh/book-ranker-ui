@@ -9,6 +9,8 @@ import { BrowseComponent } from './pages/browse/browse.component';
 import { HttpClientModule } from '@angular/common/http';
 import { VoteComponent } from './pages/vote/vote.component';
 import { NewBookComponent } from './pages/vote/new-book/new-book.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/login/register/register.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NewBookComponent } from './pages/vote/new-book/new-book.component';
     LeaderboardComponent,
     BrowseComponent,
     VoteComponent,
-    NewBookComponent
+    NewBookComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

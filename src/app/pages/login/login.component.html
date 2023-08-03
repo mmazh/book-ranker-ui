@@ -1,0 +1,22 @@
+<div class="centered-content">
+    <div class="header-container">
+        <h1 class="title" routerLink=""> Leaderboard </h1>
+        <h1 class="title" routerLink="/browse"> Browse </h1>
+        <h1 class="title" routerLink="/vote"> Vote </h1>
+        <h1 class="title"> Login </h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-container">
+        <div>
+            <label class="white">Username:  </label>
+            <input type="text" class="white" required formControlName="username">
+        </div>
+        <br>
+        <div>
+            <label class="white">Password: </label>
+            <input type="text" class="white" required formControlName="password">
+        </div>
+        <br>
+        <button [disabled]="!loginForm.valid" class="white" type="submit">Login</button>
+        <a routerLink="/register" class="inline">Register</a>
+    </form>    
+</div>

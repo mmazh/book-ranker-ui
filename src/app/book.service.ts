@@ -40,8 +40,16 @@ export class BookService {
     return this.webReqService.post(`book`, payload);
   }
 
+  createNewUser(payload: Object) {
+    return this.webReqService.post(`login/new`, payload);
+  }
+
   updateVote(voteId: number, payload: Object) {
     return this.webReqService.put(`votes/${voteId}`, payload);
+  }
+
+  validateUser(payload: Object) {
+    return this.webReqService.post(`login`, payload);
   }
 
 }

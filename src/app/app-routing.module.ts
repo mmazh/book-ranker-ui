@@ -4,12 +4,16 @@ import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component'
 import { BrowseComponent } from './pages/browse/browse.component';
 import { VoteComponent } from './pages/vote/vote.component';
 import { NewBookComponent } from './pages/vote/new-book/new-book.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/login/register/register.component';
 
 const routes: Routes = [
   { path: '', component: LeaderboardComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'vote', component: VoteComponent },
-  { path: 'new-book', component: NewBookComponent }
+  { path: 'new-book', component: NewBookComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

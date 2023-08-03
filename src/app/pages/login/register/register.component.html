@@ -1,0 +1,21 @@
+<div class="centered-content">
+    <div class="header-container">
+        <h1 class="title"> Register </h1>
+    </div>
+    <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()" class="login-container">
+        <div>
+            <label class="white">Username:  </label>
+            <input type="text" class="white" required formControlName="username">
+            <p class="red inline" *ngIf="username?.invalid && username?.dirty"> only alphanumeric characters and "-" </p>
+        </div>
+        <br>
+        <div>
+            <label class="white">Password: </label>
+            <input type="text" class="white" required formControlName="password">
+            <p class="red inline" *ngIf="password?.invalid && password?.dirty"> at least 1 character long </p>
+        </div>
+        <br>
+        <button [disabled]="!newUserForm.valid" type="submit">Register</button>
+        <button class="cancel-btn" routerLink="/login">Cancel</button>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+.inline {
+    display: inline;
+    margin-left: 20px;
+}
+
+button:disabled {
+    background: grey;
+}
+
+button {
+    background: greenyellow;
+    font-weight: bold;
+    color: black;
+}
+
+a:hover {
+    color: greenyellow;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
