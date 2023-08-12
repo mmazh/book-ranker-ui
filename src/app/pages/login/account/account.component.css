@@ -1,0 +1,20 @@
+p {
+    color: white;
+}
+
+table, th, td {
+    color: wheat;
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+button {
+    background: orange;
+    font-weight: bold;
+    color: black;
+}
+
+.votes-container h1 {
+    font-size: 17px;
+    color: wheat;
+}

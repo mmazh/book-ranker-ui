@@ -5,6 +5,7 @@
 
 button:disabled {
     background: grey;
+    color: black;
 }
 
 button {
@@ -22,4 +23,17 @@ a:hover {
 a {
     text-decoration: none;
     color: white;
+}
+
+input {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+p {
+    color: orange;
+    font-weight: bold;
 }

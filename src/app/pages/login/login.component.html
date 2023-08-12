@@ -6,17 +6,15 @@
         <h1 class="title"> Login </h1>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-container">
-        <div>
-            <label class="white">Username:  </label>
-            <input type="text" class="white" required formControlName="username">
-        </div>
+        <label>Username:  </label>
+        <input type="text" formControlName="username">
         <br>
-        <div>
-            <label class="white">Password: </label>
-            <input type="text" class="white" required formControlName="password">
-        </div>
+        <label>Password: </label>
+        <input type="text" formControlName="password">
         <br>
-        <button [disabled]="!loginForm.valid" class="white" type="submit">Login</button>
+        <br>
+        <button [disabled]="!loginForm.valid" type="submit">Login</button>
         <a routerLink="/register" class="inline">Register</a>
-    </form>    
+        <p *ngIf="invalidLoginAttempt"> Invalid Login </p>
+    </form>
 </div>

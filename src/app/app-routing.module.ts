@@ -6,6 +6,7 @@ import { VoteComponent } from './pages/vote/vote.component';
 import { NewBookComponent } from './pages/vote/new-book/new-book.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/login/register/register.component';
+import { AccountComponent } from './pages/login/account/account.component';
 
 const routes: Routes = [
   { path: '', component: LeaderboardComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'vote', component: VoteComponent },
   { path: 'new-book', component: NewBookComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'account', component: AccountComponent }
 ];
 
 @NgModule({

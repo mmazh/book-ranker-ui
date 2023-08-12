@@ -1,0 +1,28 @@
+<div class="centered-content">
+    <div class="header-container">
+        <h1 class="title" routerLink=""> Leaderboard </h1>
+        <h1 class="title" routerLink="/browse"> Browse </h1>
+        <h1 class="title" routerLink="/vote"> Vote </h1>
+        <h1 class="title"> Login </h1>
+    </div>
+    <button (click)="deleteAccount()">Delete Account</button>
+    <p> Warning: all your account data will be permanently deleted</p>
+    <br>
+    <div class="votes-container">
+        <h1> My Votes </h1>
+        <table style="width:400px">
+            <tr> 
+                <th style="width:20%">Vote</th>
+                <th style="width:70%">Book</th>
+                <th style="width:10%"></th>
+            </tr>
+            <ng-container *ngFor="let vote of userVotes">
+            <tr>
+                <td><span *ngFor="let _ of [].constructor(vote.stars)">★</span></td>
+                <td>{{ vote.title }} </td>
+                <td><button ngDefaultControl [(ngModel)]="vote.voteId" (click)="deleteVote(vote.voteId)"> Delete</button></td>
+            </tr>
+            </ng-container>
+        </table>
+    </div>
+</div>

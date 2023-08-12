@@ -6,50 +6,54 @@ import { WebRequestService } from './web-request.service';
 })
 export class BookService {
 
-  constructor(private webReqService: WebRequestService) { }
+  readonly ROOT_URL;
+
+  constructor(private webReqService: WebRequestService) { 
+    this.ROOT_URL = 'http://localhost:8080';
+  }
 
   getAllBooks() {
-    return this.webReqService.get('book');
-  }
-
-  getTopThreeBooks() {
-    return this.webReqService.get(`book/top3`);
-  }
-
-  getAllVotesForUser(userId: number) {
-    return this.webReqService.get(`votes/user/${userId}`);
-  }
-
-  getAllVotesForBook(bookId: number) {
-    return this.webReqService.get(`votes/book/${bookId}`);
+    return this.webReqService.get(`${this.ROOT_URL}/book`);
   }
 
   getAllVotes() {
-    return this.webReqService.get(`votes`);
+    return this.webReqService.get(`${this.ROOT_URL}/votes`);
   }
 
   getAllUsers() {
-    return this.webReqService.get(`login/users`);
+    return this.webReqService.get(`${this.ROOT_URL}/login/users`);
+  }
+
+  getTopThreeBooks() {
+    return this.webReqService.get(`${this.ROOT_URL}/book/top3`);
+  }
+
+  getAllVotesForUser(userId: number) {
+    return this.webReqService.get(`${this.ROOT_URL}/votes/user/${userId}`);
+  }
+
+  getAllVotesForBook(bookId: number) {
+    return this.webReqService.get(`${this.ROOT_URL}/votes/book/${bookId}`);
   }
 
   createNewVote(payload: Object) {
-    return this.webReqService.post(`votes`, payload);
+    return this.webReqService.post(`${this.ROOT_URL}/votes`, payload);
   }
 
   createNewBook(payload: Object) {
-    return this.webReqService.post(`book`, payload);
+    return this.webReqService.post(`${this.ROOT_URL}/book`, payload);
   }
 
   createNewUser(payload: Object) {
-    return this.webReqService.post(`login/new`, payload);
+    return this.webReqService.post(`${this.ROOT_URL}/login/new`, payload);
   }
 
   updateVote(voteId: number, payload: Object) {
-    return this.webReqService.put(`votes/${voteId}`, payload);
+    return this.webReqService.put(`${this.ROOT_URL}/votes/${voteId}`, payload);
   }
 
-  validateUser(payload: Object) {
-    return this.webReqService.post(`login`, payload);
+  deleteVote(voteId: number) {
+    return this.webReqService.delete(`${this.ROOT_URL}/votes/${voteId}`);
   }
 
 }
