@@ -5,12 +5,25 @@
     max-width: 480px;
 }
 
-.vote-item {
+table, th, td {
     color: slateblue;
     text-indent: 30px;
-    margin: 0;
+    border-collapse: collapse;
+}
+
+.no-votes {
+    color: slateblue;
+    text-indent: 90px;
 }
 
 summary:hover {
     cursor: pointer;
+}
+
+details, p {
+    color: white;
+}
+
+.stars {
+    text-align: right;
 }

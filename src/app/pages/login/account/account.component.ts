@@ -12,7 +12,6 @@ export class AccountComponent {
 
   public userVotes: any[] = [];
   private userId: number = 0;
-  private username: string = "";
 
   constructor(private authService: AuthService, private router: Router, private bookService: BookService) {}
 
@@ -20,7 +19,6 @@ export class AccountComponent {
     if (this.authService.tokenExpired()) this.router.navigate(['login']);
     const tokenPayload = this.authService.tokenPayload();
     this.userId = tokenPayload['userid'];
-    this.username = tokenPayload['username']
     this.bookService.getAllVotesForUser(this.userId).subscribe((response: any) => {
       this.userVotes = response;
     });
