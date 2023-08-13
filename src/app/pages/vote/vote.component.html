@@ -22,6 +22,6 @@
         </span>
         <br>
         <br>
-        <button [disabled]="!voteForm.valid && !loaded" type="submit">Vote</button>
+        <button [disabled]="!voteForm.valid || !loaded" type="submit">Vote</button>
     </form>
 </div>
