@@ -44,4 +44,18 @@ export class AccountComponent {
     })
   }
 
+  loggedIn() {
+    return !this.authService.tokenExpired();
+  }
+  
+  login() {
+    this.router.navigate(['login']);
+  }
+
+  logout() {
+    this.authService.logout().subscribe((response: any) => {
+      window.location.reload();
+    })
+  }
+
 }

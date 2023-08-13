@@ -3,20 +3,21 @@
         <h1 class="title"> Leaderboard </h1>
         <h1 class="title" routerLink="/browse"> Browse </h1>
         <h1 class="title" routerLink="/vote"> Vote </h1>
-        <h1 class="title" routerLink="/login"> Login </h1>
+    </div>
+    <div class="login-header">
+        <button *ngIf="!loggedIn()" (click)="login()"> Login </button>
+        <button *ngIf="loggedIn()" (click)="logout()"> Logout </button>
     </div>
     <div class="leaderboard-container">
-        <div *ngIf="loaded; else loading">
-            <div *ngFor="let book of topBooks; let i = index"> 
+        <ng-container *ngIf="loaded; else loading">
+            <ng-container *ngFor="let book of topBooks; let i = index"> 
                 <div class="white">
-                    {{ i + 1 }}. <span style="color: gold;"> (★{{ book.average }}) </span> {{ book.title }} {{ book.author }}
+                    {{ i + 1 }}. 
+                    <span style="color: gold;"> (★{{ book.average }}) </span> 
+                    {{ book.title }} - {{ book.author }}
                 </div>
-            </div>
-        </div>
-        <ng-template #loading>
-            <h1 class="leaderboard-item">
-                Loading...
-            </h1>
-        </ng-template>
+            </ng-container>
+        </ng-container>
+        <ng-template #loading> <h1 class="leaderboard-item"> Loading... </h1> </ng-template>
     </div>
 </div>

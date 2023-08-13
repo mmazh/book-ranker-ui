@@ -8,7 +8,7 @@ table, th, td {
     border-collapse: collapse;
 }
 
-button {
+.orange-btn {
     background: orange;
     font-weight: bold;
     color: black;
