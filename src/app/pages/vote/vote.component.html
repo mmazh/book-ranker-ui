@@ -2,35 +2,26 @@
     <div class="header-container">
         <h1 class="title" routerLink=""> Leaderboard </h1>
         <h1 class="title" routerLink="/browse"> Browse </h1>
-        <h1 class="title"> Vote </h1>
+        <h1 class="title" routerLink="/vote"> Vote </h1>
         <h1 class="title" routerLink="/login"> Login </h1>
     </div>
     <form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label class="white"> Username: </label>
-            <input type="text" class="white" required formControlName="username">
-            <p class="red inline" *ngIf="username?.invalid && username?.dirty"> only alphanumeric or dashes "-"" accepted </p>
-        </div>
+        <select required formControlName="book">
+            <option value=""> Choose a Book...</option>
+            <option *ngFor="let book of this.books"> {{ book.title }}, {{ book.author }} </option>
+        </select>
+        <a routerLink="/new-book">Add new book</a>
         <br>
-        <div>
-            <select class="white" required formControlName="book">
-                <option value=""> Choose a Book...</option>
-                <option *ngFor="let book of this.books">{{ book.title }}, {{ book.author }}</option>
-            </select>
-            <a class="white left-margin" routerLink="/new-book">Click to add new book</a>
-        </div>
+        <label> Rating: </label>
+        <span class="rating">
+            <input type="radio" id="rating-5" value="5" formControlName="stars"/> <label for="rating-5">5</label>
+            <input type="radio" id="rating-4" value="4" formControlName="stars"/> <label for="rating-4">4</label>
+            <input type="radio" id="rating-3" value="3" formControlName="stars"/> <label for="rating-3">3</label>
+            <input type="radio" id="rating-2" value="2" formControlName="stars"/> <label for="rating-2">2</label>
+            <input type="radio" id="rating-1" value="1" formControlName="stars"/> <label for="rating-1">1</label>
+        </span>
         <br>
-        <div>
-            <label class="white"> Rating: </label>
-            <span class="rating">
-                <input type="radio" id="rating-5" name="stars" value="5" formControlName="stars">/> <label for="rating-5">5</label>
-                <input type="radio" id="rating-4" name="stars" value="4" formControlName="stars" checked="checked"/> <label for="rating-4">4</label>
-                <input type="radio" id="rating-3" name="stars" value="3" formControlName="stars"/> <label for="rating-3">3</label>
-                <input type="radio" id="rating-2" name="stars" value="2" formControlName="stars"/> <label for="rating-2">2</label>
-                <input type="radio" id="rating-1" name="stars" value="1" formControlName="stars"/> <label for="rating-1">1</label>
-            </span>
-        </div>
         <br>
-        <button [disabled]="!voteForm.valid" class="white" type="submit">Vote</button>
+        <button [disabled]="!voteForm.valid && !loaded" type="submit">Vote</button>
     </form>
 </div>

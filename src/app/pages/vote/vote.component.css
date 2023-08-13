@@ -9,6 +9,38 @@ option {
     font-size: smaller;
 }
 
+select {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+button:disabled {
+    background: grey;
+}
+
+button {
+    background: greenyellow;
+    color: black;
+}
+
+a:hover {
+    color: greenyellow;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    margin-left: 15px;
+}
+
+
+/* Logic for star rating system below */
+
 .rating {
     /* flip the order so we can use ~ and + */
     unicode-bidi: bidi-override;
@@ -51,36 +83,4 @@ option {
     content: "★";
     color: limegreen;
     text-shadow: 0 0 8px rgb(118, 225, 118);
-}
-
-.inline {
-    display: inline;
-    margin-right: 20px;
-}
-
-input.ng-invalid.ng-dirty {
-    border: 1px solid red !important; 
-}
-
-button:disabled {
-    background: grey;
-}
-
-button {
-    background: greenyellow;
-    color: black;
-}
-
-a:hover {
-    color: greenyellow;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-}
-
-.left-margin {
-    margin-left: 5px;
 }
