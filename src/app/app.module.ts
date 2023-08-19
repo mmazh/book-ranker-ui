@@ -12,6 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/login/register/register.component';
 import { AccountComponent } from './pages/login/account/account.component';
 import { HttpInterceptService } from './http-intercept.service';
+import { LoginSidebarComponent } from './pages/login-sidebar/login-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpInterceptService } from './http-intercept.service';
     NewBookComponent,
     LoginComponent,
     RegisterComponent,
-    AccountComponent
+    AccountComponent,
+    LoginSidebarComponent
   ],
   imports: [
     BrowserModule,

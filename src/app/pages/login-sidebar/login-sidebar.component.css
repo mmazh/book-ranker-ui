@@ -1,0 +1,32 @@
+.login-header {
+    position: fixed;
+    left: 400px;
+    top: 100px;
+}
+
+.login-header button {
+    color: black;
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+.login-header button:hover {
+    color: greenyellow;
+    background-color: black;
+    cursor: pointer;
+}
+
+.data {
+    color: greenyellow;
+}
+
+a, p {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+a:hover {
+    color: greenyellow;
+    cursor: pointer;
+    text-decoration: underline;
+}

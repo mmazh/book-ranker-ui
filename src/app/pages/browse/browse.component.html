@@ -4,10 +4,6 @@
         <h1 class="title"> Browse </h1>
         <h1 class="title" routerLink="/vote"> Vote </h1>
     </div>
-    <div class="login-header">
-        <button *ngIf="!loggedIn()" (click)="login()"> Login </button>
-        <button *ngIf="loggedIn()" (click)="logout()"> Logout </button>
-    </div>
     <div class="content-container">
         <div *ngIf="loaded; else loading">
             <ng-container *ngFor="let book of voteData">

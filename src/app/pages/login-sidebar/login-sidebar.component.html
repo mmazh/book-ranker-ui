@@ -1,0 +1,15 @@
+<div class="login-header">
+    <button *ngIf="!loggedIn()" (click)="login()"> Login </button>
+    <ng-container *ngIf="loggedIn()">
+        <button (click)="logout()"> Logout </button>
+        <p> Username: 
+            <span class="data"> {{ getUsername() }} </span> 
+        </p>
+        <p> Seconds Remaining: 
+            <span class="data"> {{ seconds }} </span> 
+        </p>
+        <a routerLink="/account"> > Settings </a>
+        <br>
+        <a (click)="refreshToken()"> > Extend Session </a>
+    </ng-container>
+</div>

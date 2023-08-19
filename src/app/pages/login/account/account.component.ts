@@ -18,6 +18,7 @@ export class AccountComponent {
   ngOnInit() {
     if (this.authService.tokenExpired()) this.router.navigate(['login']);
     const tokenPayload = this.authService.tokenPayload();
+    if (!tokenPayload) return;
     this.userId = tokenPayload['userid'];
     this.bookService.getAllVotesForUser(this.userId).subscribe((response: any) => {
       this.userVotes = response;
@@ -41,20 +42,6 @@ export class AccountComponent {
         error: (e) => window.alert("error logging out of account"),
         complete: () => this.router.navigate(['login'])
       })
-    })
-  }
-
-  loggedIn() {
-    return !this.authService.tokenExpired();
-  }
-  
-  login() {
-    this.router.navigate(['login']);
-  }
-
-  logout() {
-    this.authService.logout().subscribe((response: any) => {
-      window.location.reload();
     })
   }
 

@@ -12,7 +12,7 @@ h1 {
 
 .centered-content {
     position: fixed;
-    left: 550px;
+    left: 600px;
     top: 100px;
 }
 
@@ -30,24 +30,6 @@ h1 {
     position: fixed;
     left: 700px;
     top: 100px;
-}
-
-.login-header {
-    position: fixed;
-    left: 400px;
-    top: 100px;
-}
-
-.login-header button {
-    color: black;
-    background-color: greenyellow;
-    cursor: pointer;
-}
-
-.login-header button:hover {
-    color: greenyellow;
-    background-color: black;
-    cursor: pointer;
 }
 
 .header-container h1:hover {

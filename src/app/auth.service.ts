@@ -33,18 +33,15 @@ export class AuthService {
   }
 
   tokenExpired() {
-    const token = localStorage.getItem("Access-Token")
-    if (token) {
-      const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-      return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-    }
+    const payload = this.tokenPayload();
+    if (payload) return (Math.floor((new Date).getTime() / 1000)) >= payload.exp;
     return true;
   }
 
   tokenPayload() {
     const token = localStorage.getItem("Access-Token");
     if (token) return JSON.parse(atob(token.split('.')[1]));
-    return {}
+    return null;
   }
 
   deleteAccount() {

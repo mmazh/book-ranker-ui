@@ -4,10 +4,6 @@
         <h1 class="title" routerLink="/browse"> Browse </h1>
         <h1 class="title" routerLink="/vote"> Vote </h1>
     </div>
-    <div class="login-header">
-        <button *ngIf="!loggedIn()" (click)="login()"> Login </button>
-        <button *ngIf="loggedIn()" (click)="logout()"> Logout </button>
-    </div>
     <div class="leaderboard-container">
         <ng-container *ngIf="loaded; else loading">
             <ng-container *ngFor="let book of topBooks; let i = index"> 

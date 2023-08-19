@@ -26,6 +26,7 @@ export class VoteComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.tokenExpired()) this.router.navigate(['login']);
     const tokenPayload = this.authService.tokenPayload();
+    if (!tokenPayload) return;
     this.userId = tokenPayload['userid'];
     this.bookService.getAllBooks().subscribe((response: any) => {
       this.books = response;
@@ -69,20 +70,6 @@ export class VoteComponent implements OnInit {
 
   private findBookId(titleAuthor: string | null | undefined) {
     return this.books.find((x: any) => `${x.title}, ${x.author}` === titleAuthor)?.bookId;
-  }
-
-  loggedIn() {
-    return !this.authService.tokenExpired();
-  }
-  
-  login() {
-    this.router.navigate(['login']);
-  }
-
-  logout() {
-    this.authService.logout().subscribe((response: any) => {
-      window.location.reload();
-    })
   }
 
 }
