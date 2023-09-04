@@ -4,5 +4,7 @@ UI for book-ranker-api
 
 Simplified version of how user authentication works in the application
 
-![3auth drawio](https://github.com/mmazh/book-ranker-ui/assets/41888102/7825ac9a-fe88-4e96-a9d3-f3f50e1c12c0)
+![1-auth drawio(1)](https://github.com/mmazh/book-ranker-ui/assets/41888102/c438871f-dc09-48a8-a7e6-770e09fda6cc)
+
+
 
