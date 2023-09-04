@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth.service';
 import { JwtCountdownService } from 'src/app/jwt-countdown.service';
@@ -31,14 +31,13 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password 
     };
-    this.authService.login(payload).subscribe({ 
-      error: (e) => {
+    this.authService.login(payload).subscribe((res: any) => { 
+      if (res.status !== 200) {
         this.invalidLoginAttempt = true;
         this.loginForm.reset();
-      },
-      complete: () => {
+      } else {
         this.jwtcounter.startTimer();
-        this.router.navigate(['account']);
+        this.router.navigate(['/']);
       }
     })
   }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
 import { BookService } from 'src/app/book.service';
 import { Router } from '@angular/router';
+import { JwtCountdownService } from 'src/app/jwt-countdown.service';
 
 @Component({
   selector: 'app-account',
@@ -13,12 +14,11 @@ export class AccountComponent {
   public userVotes: any[] = [];
   private userId: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private bookService: BookService) {}
+  constructor(private authService: AuthService, private router: Router, private bookService: BookService, private jwtCounter: JwtCountdownService) {}
 
   ngOnInit() {
-    if (this.authService.tokenExpired()) this.router.navigate(['login']);
     const tokenPayload = this.authService.tokenPayload();
-    if (!tokenPayload) return;
+    if (this.authService.tokenExpired() || !tokenPayload) this.router.navigate(['/']);
     this.userId = tokenPayload['userid'];
     this.bookService.getAllVotesForUser(this.userId).subscribe((response: any) => {
       this.userVotes = response;
@@ -26,8 +26,6 @@ export class AccountComponent {
   }
 
   deleteVote($event: any) {
-    console.log($event);
-    console.log(typeof $event);
     if (typeof $event === "number") {
       this.bookService.deleteVote($event).subscribe((response: any) => {
         window.location.reload();
@@ -36,11 +34,15 @@ export class AccountComponent {
   }
 
   deleteAccount() {
-    this.authService.deleteAccount().subscribe({
-      error: (e) => window.alert("error deleting account"),
-      complete: () => this.authService.logout().subscribe({
-        error: (e) => window.alert("error logging out of account"),
-        complete: () => this.router.navigate(['login'])
+    this.authService.deleteAccount().subscribe((deleteResponse: any) => {
+      this.jwtCounter.stopTimer();
+      this.authService.logout().subscribe((logoutResponse: any) => {
+        if (deleteResponse.status !== 200 || logoutResponse.status !== 200) {
+          window.alert("error");
+        } else {
+          window.alert("successfully deleted");
+        }
+        this.router.navigate(['/']);
       })
     })
   }

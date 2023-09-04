@@ -16,6 +16,11 @@ export class WebRequestService {
     return this.http.post(url, payload);
   }
 
+  postWithCredentials(url: string, payload: Object) {
+    const requestOptions = { withCredentials: true};
+    return this.http.post(url, payload, requestOptions);
+  }
+
   put(url: string, payload: Object) {
     return this.http.put(url, payload);
   }

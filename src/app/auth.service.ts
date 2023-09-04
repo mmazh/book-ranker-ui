@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   login(payload: Object) {
-    return this.webReqService.post(`${this.ROOT_URL}/login`, payload)
+    return this.webReqService.postWithCredentials(`${this.ROOT_URL}/login`, payload)
       .pipe(tap(res => this.setSession(res)));
   }
 
@@ -24,12 +24,20 @@ export class AuthService {
   }
 
   private setSession(authResult: any) {
-    localStorage.setItem('Access-Token', authResult.accessToken);
+    if (Object.hasOwn(authResult, 'accessToken')) {
+      localStorage.setItem('Access-Token', authResult.accessToken);
+    }
   }
 
   logout() {
     return this.webReqService.delete(`${this.ROOT_URL}/logout`)
-      .pipe(tap(() => localStorage.removeItem("Access-Token")));
+      .pipe(tap((res) => this.removeSession(res)));
+  }
+
+  private removeSession(result: any) {
+    if (result.status === 200) {
+      localStorage.removeItem("Access-Token");
+    }
   }
 
   tokenExpired() {

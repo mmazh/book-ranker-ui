@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, interval } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtCountdownService {
 
-  constructor(private authService: AuthService) {}
+  constructor() {}
 
   private jwtCountdownSubject = new Subject<number>();
   jwtCountdown$: Observable<number> = this.jwtCountdownSubject.asObservable();
@@ -16,21 +15,31 @@ export class JwtCountdownService {
   private countdownSubscription$: any;
 
   startTimer() {
-    let current = this.calculateRemainingJwtTime();
     this.countdownSubscription$ = this.countdownInterval$.subscribe(() => {
-        current--;
-        this.jwtCountdownSubject.next(current);
-        if (current <= 0) this.countdownSubscription$.unsubscribe();
-      });
+      let current = this.calculateRemainingJwtTime();
+      this.jwtCountdownSubject.next(current);
+      if (current <= 0) {
+        this.countdownSubscription$.unsubscribe();
+      }
+    });
   }
 
   private calculateRemainingJwtTime() {
-    const payload = this.authService.tokenPayload();
+    const payload = this.tokenPayload();
     if (payload) return payload.exp - Math.floor((new Date).getTime() / 1000);
     return 0;
   }
 
-  stopTimer() {
-    this.countdownSubscription$.unsubscribe();
+  private tokenPayload() {
+    const token = localStorage.getItem("Access-Token");
+    if (token) return JSON.parse(atob(token.split('.')[1]));
+    return null;
   }
+
+  stopTimer() {
+    if (this.countdownSubscription$) {
+      this.countdownSubscription$.unsubscribe();
+    }
+  }
+  
 }

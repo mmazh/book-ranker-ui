@@ -46,7 +46,6 @@ export class VoteComponent implements OnInit {
       return;
     }
     this.bookService.createNewVote(payload).subscribe((response: any) => {
-      console.log(response);
       window.location.reload();
     });
   }

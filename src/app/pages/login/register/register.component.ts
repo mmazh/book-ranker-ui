@@ -40,7 +40,6 @@ export class RegisterComponent implements OnInit {
       password: this.newUserForm.value.password
     };
     this.bookService.createNewUser(payload).subscribe((response:any) => {
-      console.log(response);
       this.router.navigate(['login']);
     })
   }

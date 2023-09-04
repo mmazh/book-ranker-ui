@@ -14,14 +14,20 @@ export class LoginSidebarComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private jwtcounter: JwtCountdownService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    if (!this.authService.tokenExpired()) {
+      this.jwtcounter.stopTimer();
+      this.jwtcounter.startTimer(); 
+    }
     this.jwtcounter.jwtCountdown$.subscribe((countdown: number) => {
       this.seconds = countdown;
     });
   }
 
   loggedIn() {
-    return !this.authService.tokenExpired();
+    const loggedIn = !this.authService.tokenExpired();
+    if (this.seconds === 0) this.logout();
+    return loggedIn;
   }
 
   getUsername() {
@@ -30,9 +36,11 @@ export class LoginSidebarComponent implements OnInit {
   }
 
   refreshToken() {
-    this.authService.refreshToken().subscribe((res: any) => {
-      this.jwtcounter.stopTimer();
-      this.jwtcounter.startTimer();
+    this.authService.refreshToken().subscribe((response: any) => {
+      if (response.status === 200) {
+        this.jwtcounter.stopTimer();
+        this.jwtcounter.startTimer();
+      }
     })
   }
   
@@ -43,6 +51,7 @@ export class LoginSidebarComponent implements OnInit {
   logout() {
     this.authService.logout().subscribe((response: any) => {
       this.jwtcounter.stopTimer();
+      this.seconds = null;
       window.location.reload();
     })
   }
