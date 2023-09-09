@@ -18,7 +18,6 @@ export class AccountComponent {
 
   ngOnInit() {
     const tokenPayload = this.authService.tokenPayload();
-    if (this.authService.tokenExpired() || !tokenPayload) this.router.navigate(['/']);
     this.userId = tokenPayload['userid'];
     this.bookService.getAllVotesForUser(this.userId).subscribe((response: any) => {
       this.userVotes = response;

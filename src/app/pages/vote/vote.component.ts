@@ -24,7 +24,6 @@ export class VoteComponent implements OnInit {
   constructor(private bookService: BookService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    if (this.authService.tokenExpired()) this.router.navigate(['login']);
     const tokenPayload = this.authService.tokenPayload();
     if (!tokenPayload) return;
     this.userId = tokenPayload['userid'];
