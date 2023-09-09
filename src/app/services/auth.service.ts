@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { WebRequestService } from './web-request.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+// import { BehaviorSubject, Observable } from 'rxjs';
+// import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   readonly ROOT_URL;
 
   constructor(private webReqService: WebRequestService) { 
-    this.ROOT_URL = 'http://localhost:8081';
+    this.ROOT_URL = 'https://localhost:443';
   }
 
   login(payload: Object) {
@@ -19,7 +20,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.webReqService.get(`${this.ROOT_URL}/token`)
+    return this.webReqService.postWithCredentials(`${this.ROOT_URL}/token`, {})
       .pipe(tap(res => this.setSession(res)));
   }
 
@@ -30,7 +31,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.webReqService.delete(`${this.ROOT_URL}/logout`)
+    return this.webReqService.postWithCredentials(`${this.ROOT_URL}/logout`, {})
       .pipe(tap((res) => this.removeSession(res)));
   }
 
@@ -53,6 +54,6 @@ export class AuthService {
   }
 
   deleteAccount() {
-    return this.webReqService.delete(`${this.ROOT_URL}/user/`)
+    return this.webReqService.postWithCredentials(`${this.ROOT_URL}/user/`, {})
   }
 }
