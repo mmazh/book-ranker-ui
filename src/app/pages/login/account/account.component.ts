@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
-import { BookService } from 'src/app/book.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { BookService } from 'src/app/services/book.service';
 import { Router } from '@angular/router';
-import { JwtCountdownService } from 'src/app/jwt-countdown.service';
+import { JwtCountdownService } from 'src/app/services/jwt-countdown.service';
 
 @Component({
   selector: 'app-account',

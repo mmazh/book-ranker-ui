@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth.service';
-import { JwtCountdownService } from 'src/app/jwt-countdown.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { JwtCountdownService } from 'src/app/services/jwt-countdown.service';
 import { Router } from '@angular/router';
 
 @Component({

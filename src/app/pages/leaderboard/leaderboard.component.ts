@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from 'src/app/book.service';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-leaderboard',
