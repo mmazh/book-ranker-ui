@@ -1,47 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtCountdownService } from 'src/app/services/jwt-countdown.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-login-sidebar',
   templateUrl: './login-sidebar.component.html',
   styleUrls: ['./login-sidebar.component.css']
 })
-export class LoginSidebarComponent implements OnInit {
+export class LoginSidebarComponent {
 
-  public seconds: number|null = null;
+  private user?: User | null;
+  public seconds?: number | null;
 
-  constructor(private authService: AuthService, private router: Router, private jwtcounter: JwtCountdownService) {}
-
-  ngOnInit() {
-    if (!this.authService.tokenExpired()) {
-      this.jwtcounter.stopTimer();
-      this.jwtcounter.startTimer(); 
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private jwtcounter: JwtCountdownService) {
+      this.authService.user.subscribe(x => this.user = x); 
+      this.jwtcounter.jwtCountdown.subscribe(x => this.seconds = x);
     }
-    this.jwtcounter.jwtCountdown$.subscribe((countdown: number) => {
-      this.seconds = countdown;
-    });
-  }
 
   loggedIn() {
-    const loggedIn = !this.authService.tokenExpired();
-    if (this.seconds === 0) this.logout();
-    return loggedIn;
+    if (this.seconds === 0) {
+      this.logout();
+      this.seconds = null;
+    }
+    if (this.user) return true;
+    return false;
   }
 
   getUsername() {
-    let payload = this.authService.tokenPayload();
-    if (payload) return payload['username'];
+    if (this.user) return this.user.username;
+    return null;
   }
 
   refreshToken() {
-    this.authService.refreshToken().subscribe((response: any) => {
-      if (response.status === 200) {
-        this.jwtcounter.stopTimer();
-        this.jwtcounter.startTimer();
-      }
-    })
+    this.authService.refreshToken().subscribe();
   }
   
   login() {
@@ -49,10 +45,7 @@ export class LoginSidebarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout().subscribe((response: any) => {
-      this.jwtcounter.stopTimer();
-      this.seconds = null;
-      window.location.reload();
-    })
+    this.authService.logout().subscribe(x => window.location.reload())
   }
+
 }

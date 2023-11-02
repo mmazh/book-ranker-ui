@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { JwtCountdownService } from 'src/app/services/jwt-countdown.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,10 +16,10 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  constructor(private authService: AuthService, private router: Router, private jwtcounter: JwtCountdownService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    if (!this.authService.tokenExpired()) {
+    if (this.authService.loggedIn()) {
       this.router.navigate(['account']);
     }
   }
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit {
         this.invalidLoginAttempt = true;
         this.loginForm.reset();
       } else {
-        this.jwtcounter.startTimer();
         this.router.navigate(['/']);
       }
     })

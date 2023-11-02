@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookService } from 'src/app/services/book.service';
 import { Router } from '@angular/router';
-import { JwtCountdownService } from 'src/app/services/jwt-countdown.service';
+import { JwtPayloadService } from 'src/app/helpers/jwt-payload.service';
 
 @Component({
   selector: 'app-account',
@@ -14,10 +14,14 @@ export class AccountComponent {
   public userVotes: any[] = [];
   private userId: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private bookService: BookService, private jwtCounter: JwtCountdownService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private bookService: BookService,
+    private jwtPayloadService: JwtPayloadService) {}
 
   ngOnInit() {
-    const tokenPayload = this.authService.tokenPayload();
+    const tokenPayload = this.jwtPayloadService.tokenPayload();
     this.userId = tokenPayload['userid'];
     this.bookService.getAllVotesForUser(this.userId).subscribe((response: any) => {
       this.userVotes = response;
@@ -33,16 +37,11 @@ export class AccountComponent {
   }
 
   deleteAccount() {
-    this.authService.deleteAccount().subscribe((deleteResponse: any) => {
-      this.jwtCounter.stopTimer();
-      this.authService.logout().subscribe((logoutResponse: any) => {
-        if (deleteResponse.status !== 200 || logoutResponse.status !== 200) {
-          window.alert("error");
-        } else {
-          window.alert("successfully deleted");
-        }
-        this.router.navigate(['/']);
-      })
+    this.authService.deleteAccount().subscribe((res: any) => {
+      if (res.status !== 200) {
+        window.alert("error deleting account");
+      }
+      this.router.navigate(['/']);
     })
   }
 

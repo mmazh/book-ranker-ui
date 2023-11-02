@@ -1,45 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, interval } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { JwtPayloadService } from '../helpers/jwt-payload.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtCountdownService {
 
-  constructor() {}
+  private jwtCountdownSubject: Subject<number | null>;
+  jwtCountdown: Observable<number | null>;
+  private stopTimerSubject: Subject<null>;
+  private stopTimerObservable: Observable<null>;
 
-  private jwtCountdownSubject = new Subject<number>();
-  jwtCountdown$: Observable<number> = this.jwtCountdownSubject.asObservable();
-
-  private countdownInterval$ = interval(1000);
-  private countdownSubscription$: any;
+  constructor(private jwtPayloadService: JwtPayloadService) {
+    this.jwtCountdownSubject = new Subject<number | null>();
+    this.jwtCountdown = this.jwtCountdownSubject.asObservable();
+    this.stopTimerSubject = new Subject<null>();
+    this.stopTimerObservable = this.stopTimerSubject.asObservable();
+  }
 
   startTimer() {
-    this.countdownSubscription$ = this.countdownInterval$.subscribe(() => {
-      let current = this.calculateRemainingJwtTime();
+    const countdown = interval(1000)
+    .pipe(takeUntil(this.stopTimerObservable))
+    .subscribe(() => {
+      let current = this.jwtPayloadService.calculateRemainingJwtTime();
       this.jwtCountdownSubject.next(current);
+      console.log(current);
       if (current <= 0) {
-        this.countdownSubscription$.unsubscribe();
+        countdown.unsubscribe();
+        this.stopTimerSubject.next(null);
       }
     });
   }
 
-  private calculateRemainingJwtTime() {
-    const payload = this.tokenPayload();
-    if (payload) return payload.exp - Math.floor((new Date).getTime() / 1000);
-    return 0;
-  }
-
-  private tokenPayload() {
-    const token = localStorage.getItem("Access-Token");
-    if (token) return JSON.parse(atob(token.split('.')[1]));
-    return null;
-  }
-
   stopTimer() {
-    if (this.countdownSubscription$) {
-      this.countdownSubscription$.unsubscribe();
-    }
+    this.stopTimerSubject.next(null);
   }
   
 }
